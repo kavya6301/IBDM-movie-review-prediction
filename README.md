@@ -1,1 +1,1 @@
-# IBDM-movie-review-prediction
+# IMDb-movie-review-prediction
