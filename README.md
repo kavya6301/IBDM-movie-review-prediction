@@ -82,8 +82,8 @@ Now, our data is ready. We apply our models and get the accuracy score as follow
 ## Conclusion
 We can see that both logistic regression and multinomial naive bayes model performing well compared to linear support vector machines. Still we can improve the accuracy of the models by preprocessing data and by using lexicon models like Textblob.
 
-Positive words in our data:/
+Positive words in our data:\
 ![image](https://user-images.githubusercontent.com/65950195/158798603-b8351135-c05f-41ce-97ea-ead11ab5b91b.png)
 
-Negative words in our data:/
+Negative words in our data:\
 ![image](https://user-images.githubusercontent.com/65950195/158798640-83b6910b-fc64-453e-9b90-f558c06091b6.png)
