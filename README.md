@@ -42,23 +42,6 @@ To make data easier for prediction, we do preprocessing like tokenizing the data
  #Apply function on review column
  imdb_data['review']=imdb_data['review'].apply(denoise_text)
 ```
-```bash
- def remove_special_characters(text, remove_digits=True):
-    pattern=r'[^a-zA-z0-9\s]'
-    text=re.sub(pattern,'',text)
-    return text
- #Apply function on review column
- imdb_data['review']=imdb_data['review'].apply(remove_special_characters)
-
- #Stemming the text
- def simple_stemmer(text):
-    ps=nltk.porter.PorterStemmer()
-    text= ' '.join([ps.stem(word) for word in text.split()])
-    return text
- #Apply function on review column
- imdb_data['review']=imdb_data['review'].apply(simple_stemmer)
-```
-
 Now, the normalised data will be observed as follows
 ```bash
  #normalized train reviews
@@ -66,7 +49,35 @@ Now, the normalised data will be observed as follows
  norm_train_reviews[0]
  #convert dataframe to string
 ```
+![image](https://user-images.githubusercontent.com/65950195/158796379-98a873b1-4895-41bd-af05-53a18b9c2ed2.png)
 
-Vectorizing the data using tfidf vectorizer and 
+Vectorizing the data using tfidf vectorizer and count vectorizer for transforming the data into numbers and we use label binarizer for transforming sentiments to 0 or 1
+```bash
+ #Count vectorizer for bag of words
+ cv=CountVectorizer(min_df=0,max_df=1,binary=False,ngram_range=(1,3))
+ #transformed train reviews
+ cv_train_reviews=cv.fit_transform(norm_train_reviews)
+ #transformed test reviews
+ cv_test_reviews=cv.transform(norm_test_reviews)
+```
+
+```bash
+ #labeling the sentiment data
+ lb=LabelBinarizer()
+ #transformed sentiment data
+ sentiment_data=lb.fit_transform(imdb_data['sentiment'])
+ print(sentiment_data.shape)
+```
+
+Now, our data is ready. We apply our models and get the accuracy score as follows for count vectorizer bag of words (bow) and tfidf vectorizer words:
+
+-  lr_bow_score : 0.7512
+-  lr_tfidf_score : 0.75
+-  svm_bow_score : 0.5829
+-  svm_tfidf_score : 0.5112
+-  mnb_bow_score : 0.751
+-  mnb_tfidf_score : 0.7509
+
+
 ## Conclusion
 We can see that both logistic regression and multinomial naive bayes model performing well compared to linear support vector machines. Still we can improve the accuracy of the models by preprocessing data and by using lexicon models like Textblob.
